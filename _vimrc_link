@@ -1,0 +1,458 @@
+"Cscope and Ctags Usage 
+"Usage:
+"#######   Ctrl+j/k  (Use ctags's define);        Ctrl+\+ c/f/e (Use Cscope's functions) 
+"#######  Simple:   find ./ -name "*.h" -o -name "*.c" >> cscope.files ; cscope -bq ; ctags -L cscope.files
+"
+"
+"#######  Details:
+"#######  cd ~/src/project
+"#######  find path1 path2 -name "*.h" -o -name "*.c" -o -name "*.cpp" -o -name "*.java" >> cscope.files  (find可以同时指定多个路径)
+"#######  cscope -bq         (update datebase automatically)                      
+"Ctag Usage
+"#######  ctags -L cscope.files    or   ctags –R
+
+
+"all plugins: 
+"MRU 
+"CommandT 
+"pathogen
+"watchman
+"Nerdtree
+"tagbar
+"minibufexplorer
+"grep
+"quickfix
+"Cscope
+"easymotion
+"expand-region
+
+
+set nu
+set ignorecase
+set smartcase
+"set keywordprg=dic
+"set hlsearch
+set incsearch 
+set foldmethod=indent
+"set nofoldenable
+set fdo-=search
+set foldclose=all
+set foldlevel=5
+
+" set - is a word character
+set iskeyword +=-
+
+"The two lines set tab convert to 4 spaces automatically!
+set tabstop=4
+set expandtab
+"set auto indent and indent 4 space
+set smartindent
+set shiftwidth=4
+set softtabstop=4
+
+set noundofile
+set nobackup
+set noswapfile
+"set mouse=a
+"nmap <C-m> :set mouse=a<CR><bar>i
+set pastetoggle=<C-x>
+
+" Identify Chinese Code: 1: Xshell/SecureCRT set UTF-8 must
+"                        2: vim set fileencodings
+"                        3: if you want to use english but can identify Chinese code , set LANG=en_US.UTF-8 in bash.bashrc
+set encoding=utf-8
+set termencoding=utf-8
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+
+"nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+nmap <space> <C-d>
+nmap B <C-u>
+"nmap gp "0p
+"nmap gP "0P
+
+set t_Co=256
+
+
+let mapleader = ","
+let g:mapleader = ","
+
+
+nmap <silent> <leader>r :MRU<CR>
+
+" To disable a plugin, add it's bundle name to the following list
+let g:pathogen_disabled = ['LeaderF-1.20']
+" example:
+  " let g:pathogen_disabled = ['LeaderF-1.20']
+  "  or   call add(g:pathogen_disabled, 'LeaderF-1.20')
+
+"Leaderf prerequisites:
+"   LeaderF requires Vim 7.4.330+
+"   python >3.1 (remove python2.7 support by myself)
+"LeaderF configure
+let g:Lf_CommandMap = {'<C-X>': ['<C-O>'], '<C-]>': ['<C-I>']}
+let g:Lf_ShortcutF = '<leader>e'
+"nnoremap <leader>r :LeaderfMru<CR>
+"nnoremap <leader>v :LeaderfBuffer<CR>
+
+
+execute pathogen#infect()
+syntax on
+filetype plugin indent on
+
+"nmap <leader>e :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+let g:NERDTreeDirArrows=0
+let g:NERDTreeWinPos = "right"
+let g:NERDTreeIgnore = ['\.o$','\.mod\.c$','\.mod\.o$','modules\.order','modules\.builtin']
+let g:NERDTreeWinSize=40
+"autocmd VimEnter * NERDTree
+"autocmd VimEnter * wincmd p
+
+"tagbar need ctags, put ctags.exe in your intalled derectory ,not $PATH,If you are using Windows!!
+"nmap <leader>a :TagbarToggle<CR>
+let tagbar_left=1
+let tagbar_autofocus=0
+let g:tagbar_width=40
+let tagbar_map_help = "&"
+let tagbar_map_openfold = "zo"
+let tagbar_map_closefold = "zc"
+
+" Insert mode shortcut
+" this sets can causet some problem:
+" https://blog.csdn.net/u011475134/article/details/76216145
+"inoremap <C-h> <Left>
+"inoremap <C-j> <Down>
+"inoremap <C-k> <Up>
+"inoremap <C-l> <Right>
+"inoremap <C-a> <Home>
+"inoremap <C-e> <End>
+"inoremap <C-d> <Delete>
+
+
+map z <Nop>
+map zj <C-W>j
+map zk <C-W>k
+map zh <C-W>h
+map zl <C-W>l
+map zu [{
+
+
+
+"====================================
+" important:   ***  use zm/zo  ****==
+"====================================
+"
+" 
+"set foldcolumn=1
+"" <2-LeftMouse>     Open fold, or select word or % match
+"nnoremap <expr> <2-LeftMouse> foldclosed(line('.')) == -1 ? "\<2-LeftMouse>" : 'zo'
+map z <Nop>
+map zj <C-W>j
+map zk <C-W>k
+map zh <C-W>h
+map zl <C-W>l
+map zu [{
+"Tips: use zr with zm; use zo/zv with zc
+"zr:reduce level;   zo:open   zc:close 
+nnoremap zz zz
+nnoremap zr zr<bar>zz
+nnoremap zR zR<bar>zz
+nnoremap zc zm<bar>zz
+vnoremap zc zm<bar>zz
+nnoremap zC zM<bar>zz
+nnoremap zo zo<bar>zz
+nnoremap zO zO<bar>zz
+nnoremap zm zc<bar>zz
+vnoremap zm zc<bar>zz
+nnoremap zM zC<bar>zz
+nnoremap zv zv<bar>zz
+nnoremap z- z-
+nnoremap z<CR> z<CR>
+nmap yh y^
+nmap yl y$
+nmap dh d^
+nmap dl d$
+vmap do :diffget<CR>
+nmap du :diffupdate<CR>
+nmap dm :windo diffthis<CR>
+map gh ^
+map gl $
+map gn *
+map gN #
+
+"Close every window in the current tabview but the current one
+map go <C-w>o
+
+"modify just for EnhancedJumps,the key "{" and "g;" are very convenient
+"nmap ( g<C-o><bar>zz
+nmap <silent> ( <Plug>EnhancedJumpsLocalOlder<bar>zz
+"nmap ) g<C-i><bar>zz
+nmap <silent> ) <Plug>EnhancedJumpsLocalNewer<bar>zz
+
+nmap zb :BufSurfBack<cr>
+nmap zn :BufSurfForward<cr>
+
+map <C-k> <C-T>
+map <C-j> <C-]>
+
+nmap <C-p> <Plug>yankstack_substitute_older_paste
+nmap <C-n> <Plug>yankstack_substitute_newer_paste
+
+map K 2<C-y>
+map J 2<C-e>
+nnoremap <leader>J J
+
+nmap <leader>q :qa!<cr>
+nmap q <Nop>
+"nmap q: :q
+
+
+"""""Using multiple Ex commands in a map:
+"""""http://vim.wikia.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_2)
+nmap <silent> <leader>l :cmap wq <NOP><CR>:cmap q <NOP><CR>:cmap qa! <NOP><CR>:echo "Vim Locked"<CR>
+
+
+
+nmap <C-l> [c<bar>zz
+nmap <C-h> ]c<bar>zz
+
+
+"clear  ,then you can set ff=unix/dos !
+nmap <leader>c :%s/\r$//g<CR>
+
+"Ctags config: the ; must be added,otherwise the file of Tags canot be loaded automatically
+set tags=tags;
+"set autochdir
+
+
+if has("cscope") 
+"    set cscopequickfix=s-,c-,d-,i-,t-,e- 
+    set cscopetag 
+    "0 cscope fist; 1 ctags first
+    set csto=1
+    if filereadable("cscope.out")   
+        cs add cscope.out   
+    "else search cscope.out elsewhere   
+    else   
+       let cscope_file=findfile("cscope.out", ".;")   
+       let cscope_pre=matchstr(cscope_file, ".*/")   
+       if !empty(cscope_file) && filereadable(cscope_file)   
+           exe "cs add" cscope_file cscope_pre   
+       endif             
+     endif 
+    set cscopeverbose 
+
+    nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+endif
+
+if &diff  
+	colorscheme railscasts
+endif  
+
+
+" allows incsearch highlighting for range commands
+cnoremap $t <CR>:t''<CR>
+cnoremap $T <CR>:T''<CR>
+cnoremap $m <CR>:m''<CR>
+cnoremap $M <CR>:M''<CR>
+cnoremap $d <CR>:d<CR>``
+
+
+"for vim-smooth-scroll plugin configure.
+let g:ms_per_line=16
+
+
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+
+
+"Mark plugin config
+nmap  <Leader>s <Plug>MarkRegex
+nmap <Leader>M <Plug>MarkToggle
+nmap <Leader>N <Plug>MarkAllClear
+
+
+
+let g:proj_window_width=95
+let g:proj_flags="cist"
+"nmap <silent> <Leader>w <Plug>ToggleProject
+
+
+"Jump to the position last time you quit
+"au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+
+let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,.git"
+let g:DirDiffWindowSize = 14
+
+
+" Adjust windows size, "<C-w>=" To original state
+"nmap <Leader>- :vertical resize -15<cr>
+nmap <Leader>= <C-w>=
+if bufwinnr(1)
+	map + <C-W>5>
+	map _ <C-W>5<
+endif
+
+
+if has("gui_running")
+        "au GUIEnter * simalt ~x " 窗口启动时自动最大化
+        set guioptions-=m " 隐藏菜单栏
+        set guioptions-=T " 隐藏工具栏
+        set guioptions-=L " 隐藏左侧滚动条
+        "set guioptions-=r " 隐藏右侧滚动条
+        set guioptions-=b " 隐藏底部滚动条
+        "set showtabline=0 " 隐藏Tab栏
+        set guifont=Inconsolata:h14
+        colorscheme railscasts
+        "set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+        winpos 260 100 "设置初始界面位置
+        set lines=55 columns=130 "设置初始界面大小
+	vmap <C-c> <C-Insert>
+	imap <C-v> <S-Insert>
+endif
+
+colorscheme railscasts
+
+
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+"nmap f <Plug>(easymotion-overwin-f)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+"nmap f <Plug>(easymotion-bd-f2)
+"nmap f <Plug>(easymotion-overwin-f2)
+
+nmap f <Plug>(easymotion-bd-w)
+"nmap f <Plug>(easymotion-overwin-w)
+
+" Turn on case insensitive feature
+let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
+
+function! <SID>ToggleProjectOrIdeByTurns()
+    "let w:jumpbacktohere = 1
+
+    " Detect which plugins are open
+    " Identify Tagbar buffer; just using bufwinner is ok;
+    let tagbar_open = bufwinnr('__Tagbar__') != -1
+
+    " Identify vimproject buffer; Copy from project.vim ; it has to use both exist and bufwinner;
+    if !exists('g:proj_running') || bufwinnr(g:proj_running) == -1
+        let proj_open = 0
+    else
+        let proj_open = 1
+    endif
+
+    " Perform the appropriate action
+    if proj_open && tagbar_open
+        "The below 7 lines coped from project.vim implement ProjectClose
+        let g:proj_mywindow = winnr()
+        Project
+        hide
+        if(winnr() != g:proj_mywindow)
+            wincmd p
+        endif
+        unlet g:proj_mywindow
+    elseif proj_open
+        "The below 7 lines coped from project.vim implement ProjectClose
+        let g:proj_mywindow = winnr()
+        Project
+        hide
+        if(winnr() != g:proj_mywindow)
+            wincmd p
+        endif
+        unlet g:proj_mywindow
+        NERDTree
+        silent! exe "wincmd h"
+        TagbarOpen
+    elseif tagbar_open
+        TagbarClose
+        NERDTreeClose
+        "Project
+    else
+        NERDTree
+        silent! exe "wincmd h"
+        TagbarOpen
+    endif
+
+    " Jump back to the original window
+    "for window in range(1, winnr('$'))
+    "    execute window . 'wincmd w'
+    "    if exists('w:jumpbacktohere')
+    "        unlet w:jumpbacktohere
+    "        break
+    "    endif
+    "endfor
+endfunction
+nnoremap <silent> <leader>a :call <SID>ToggleProjectOrIdeByTurns()<CR>
+
+function! ToggleNERDTreeOrTagbarByTurns()
+    let w:jumpbacktohere = 1
+
+    " Detect which plugins are open
+    if exists('t:NERDTreeBufName')
+        let nerdtree_open = bufwinnr(t:NERDTreeBufName) != -1
+    else
+        let nerdtree_open = 0
+    endif
+    let tagbar_open = bufwinnr('__Tagbar__') != -1
+
+    " Perform the appropriate action
+    if nerdtree_open && tagbar_open
+        NERDTreeClose
+        TagbarClose
+    elseif nerdtree_open
+        NERDTreeClose
+        TagbarOpen
+    elseif tagbar_open
+        TagbarClose
+        NERDTree
+    else
+        TagbarOpen
+    endif
+
+    " Jump back to the original window
+    for window in range(1, winnr('$'))
+        execute window . 'wincmd w'
+        if exists('w:jumpbacktohere')
+            unlet w:jumpbacktohere
+            break
+        endif
+    endfor
+endfunction
+"nnoremap <leader>a :call ToggleNERDTreeOrTagbarByTurns()<CR>
+
+
+"esearch prerequisites:
+"    ag (the_silver_searcher) is installed
+"esearch simple tutorial:
+"    <leader>ff  or  <leader>fw
+let g:esearch#out#win#open = 'open'
+let g:esearch = {
+            \ 'adapter':    'ag',
+            \ 'backend':    'vim8',
+            \ 'out':        'win',
+            \ 'batch_size': 1000,
+            \ 'use':        ['visual', 'hlsearch', 'last'],
+            \}
+hi ESearchMatch ctermfg=black ctermbg=yellow guifg=#000000 guibg=#E6E6FA
+hi esearchFName ctermfg=107 ctermbg=233 guifg=#000000 guibg=#E6E6FA
+
+" https://github.com/luochen1990/rainbow
+let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
